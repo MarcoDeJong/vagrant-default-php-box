@@ -1,0 +1,24 @@
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName box
+
+    DocumentRoot /var/www/box
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+        <Directory /var/www/box>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/box-error.log
+
+    # Possible values include: debug, info, notice, warn, error, crit,
+    # alert, emerg.
+    LogLevel warn
+
+    CustomLog ${APACHE_LOG_DIR}/box-access.log combined
+</VirtualHost>
