@@ -59,4 +59,18 @@ service { 'memcachedb':
         ensure  => running,
         require => Package['memcachedb'],
 }
+package { 'libpcre3-dev':
+        ensure => present,
+        require => [Exec['apt-get update'],Package["php5"]]
+        }
+exec { "pecl install apc":
+        command => "pecl install apc",
+        creates => "/usr/lib/php5/20090626/apc.so",
+        require => [Exec['apt-get update'],Package["php5"],Package["libpcre3-dev"]]
+    }
+file { "/etc/php5/conf.d/apc.ini":
+    source  => "puppet:///modules/custom/apc.ini",
+    require => [Exec['pecl install apc']],
+    notify  => Service['apache2']
+  }
 }
