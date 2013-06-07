@@ -13,9 +13,5 @@ define apache_vhosts::vhost() {
       ensure => link,
       target => "/etc/apache2/sites-available/${name}",
       notify => Service['apache2'];
-
-    "/var/www/${name}":
-      ensure => link,
-      target => "/vagrant/sites/${name}";
   }
 }

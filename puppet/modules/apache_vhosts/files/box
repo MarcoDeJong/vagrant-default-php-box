@@ -1,24 +1,7 @@
-<VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    ServerName box
+# THIS FILE IS MAINTAINED BY PUPPET
 
-    DocumentRoot /var/www/box
-    <Directory />
+Alias /box /vagrant/sites/box
+
+<Directory /vagrant/sites/box>
         Options FollowSymLinks
-        AllowOverride None
-    </Directory>
-        <Directory /var/www/box>
-        Options Indexes FollowSymLinks MultiViews
-        AllowOverride None
-        Order allow,deny
-        allow from all
-    </Directory>
-
-    ErrorLog ${APACHE_LOG_DIR}/box-error.log
-
-    # Possible values include: debug, info, notice, warn, error, crit,
-    # alert, emerg.
-    LogLevel warn
-
-    CustomLog ${APACHE_LOG_DIR}/box-access.log combined
-</VirtualHost>
+</Directory>
