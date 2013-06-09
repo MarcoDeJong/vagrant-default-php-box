@@ -17,7 +17,7 @@ File {
 
 ## Set default path for Exec calls
 Exec {
-    path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ]
+  path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ]
 }
 
 include baseconfig, apache, mysql, php, apache_vhosts, custom

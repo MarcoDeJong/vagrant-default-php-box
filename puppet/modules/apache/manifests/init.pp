@@ -1,9 +1,6 @@
-# == Class: apache
-#
 # Installs packages for Apache2, enables modules, and sets config files.
-#
 class apache {
-  package { ['apache2', 'apache2-mpm-prefork']:
+  package { [ 'apache2', 'apache2-mpm-prefork' ]:
     ensure => present;
   }
 
@@ -12,6 +9,6 @@ class apache {
     require => Package['apache2'];
   }
 
-  apache::conf { ['apache2.conf', 'envvars', 'ports.conf']: }
-  apache::module { ['expires.load', 'proxy.conf', 'proxy.load', 'proxy_http.load', 'rewrite.load']: }
+  apache::conf { [ 'apache2.conf', 'envvars', 'ports.conf' ]: }
+  apache::module { [ 'expires.load', 'proxy.conf', 'proxy.load', 'proxy_http.load', 'rewrite.load' ]: }
 }
