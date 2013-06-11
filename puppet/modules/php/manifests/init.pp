@@ -13,7 +13,6 @@ class php {
              'php5-memcached',
              'php5-mysql',
              'php-pear',
-             'php5-phar',
              'php5-pspell',
              'php5-sqlite',
              'php5-tidy',
