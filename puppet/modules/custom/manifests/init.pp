@@ -67,4 +67,8 @@ class custom {
     source  => "puppet:///modules/custom/apc.ini",
     notify  => Service['apache2']
   }
+  package { 'sqlite3':
+    ensure  => present,
+    require => Exec['apt-get update']
+  }
 }
