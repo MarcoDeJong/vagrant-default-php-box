@@ -45,13 +45,13 @@ class custom {
     command => "echo 'nameserver 8.8.8.8' >> /etc/resolv.conf; echo 'nameserver 8.8.4.4' >> /etc/resolv.conf", 
     unless  => "/bin/grep -c 'nameserver 8.8.8.8' /etc/resolv.conf",
   }
-  package { 'memcachedb':
+  package { 'memcached':
     ensure => present,
     require => Exec['apt-get update']
   }
-  service { 'memcachedb':
+  service { 'memcached':
     ensure  => running,
-    require => Package['memcachedb']
+    require => Package['memcached']
   }
   package { 'libpcre3-dev':
     ensure => present,

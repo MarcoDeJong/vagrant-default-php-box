@@ -21,7 +21,7 @@ class php {
              'php5-xmlrpc',
              'php5-xsl']:
     ensure  => present,
-    require => [ Exec['apt-get update'], Package['apache2', 'mysql-server', 'memcachedb'] ];
+    require => [ Exec['apt-get update'], Package['apache2', 'mysql-server', 'memcached'] ];
   }
 
   file {

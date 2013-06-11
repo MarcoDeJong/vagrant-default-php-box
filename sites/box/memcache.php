@@ -19,13 +19,13 @@
 
 $VERSION='$Id: memcache.php,v 1.1.2.3 2008/08/28 18:07:54 mikl Exp $';
 
-define('ADMIN_USERNAME','memcache'); 	// Admin Username
-define('ADMIN_PASSWORD','password');  	// Admin Password
+define('ADMIN_USERNAME','vagrant'); 	// Admin Username
+define('ADMIN_PASSWORD','vagrant');  	// Admin Password
 define('DATE_FORMAT','Y/m/d H:i:s');
 define('GRAPH_SIZE',200);
 define('MAX_ITEM_DUMP',50);
 
-$MEMCACHE_SERVERS[] = '10.11.12.13:11211'; // add more as an array
+$MEMCACHE_SERVERS[] = 'localhost:11211'; // add more as an array
 
 
 ////////// END OF DEFAULT CONFIG AREA /////////////////////////////////////////////////////////////
