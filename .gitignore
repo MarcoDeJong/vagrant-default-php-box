@@ -1,3 +1,4 @@
 .vagrant
 .git
 .DS_Store
+/www/*

@@ -1,0 +1,7 @@
+# THIS FILE IS MAINTAINED BY PUPPET
+
+Alias /box /vagrant/sites/box
+
+<Directory /vagrant/sites/box>
+        Options FollowSymLinks
+</Directory>

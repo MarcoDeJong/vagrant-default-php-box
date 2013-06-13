@@ -5,11 +5,12 @@ Vagrant.configure("2") do |config|
     config.vm.box = "precise64"
     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    config.vm.hostname = "developmentbox"
+    config.vm.hostname = "development.anytime-anyplace.com"
     config.vm.network :private_network, ip: "10.11.12.13"
-    
+    config.ssh.forward_agent = true
+
     # Specify folder which you would like to have available in your box
-    config.vm.synced_folder ".", "/vagrant"
+    config.vm.synced_folder ".", "/vagrant", :owner => "vagrant", :group => "www-data", :extra => 'dmode=775,fmode=664'
 
     # In case speed is lacking, try the NFS option
     #config.vm.synced_folder ".", "/vagrant", :nfs => true
@@ -29,4 +30,12 @@ Vagrant.configure("2") do |config|
         # Dual core
         v.customize ["modifyvm", :id, "--cpus", 2]
     end
+
+    # Start puppet
+    config.vm.provision :puppet do |puppet|
+        puppet.manifests_path = 'puppet/manifests'
+        puppet.manifest_file = 'site.pp'
+        puppet.module_path = 'puppet/modules'
+    end
+
 end
