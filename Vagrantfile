@@ -7,7 +7,8 @@ Vagrant.configure("2") do |config|
 
     config.vm.hostname = "development.anytime-anyplace.com"
     config.vm.network :private_network, ip: "10.11.12.13"
-    
+    config.ssh.forward_agent = true
+
     # Specify folder which you would like to have available in your box
     config.vm.synced_folder ".", "/vagrant", :owner => "vagrant", :group => "www-data", :extra => 'dmode=775,fmode=664'
 
