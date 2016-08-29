@@ -1,13 +1,3 @@
-# create a new run stage to ensure certain modules are included first
-stage { 'pre':
-  before => Stage['main']
-}
-
-# add the baseconfig module to the new 'pre' run stage
-class { 'baseconfig':
-  stage => 'pre'
-}
-
 # set defaults for file ownership/permissions
 File {
   owner => 'root',
@@ -15,9 +5,13 @@ File {
   mode  => '0644',
 }
 
-## Set default path for Exec calls
-Exec {
-  path => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ]
-}
+# default path
+Exec { path => ["/usr/bin", "/bin", "/usr/sbin", "/sbin", "/usr/local/bin", "/usr/local/sbin"] }
 
-include baseconfig, apache, mysql, php, apache_vhosts, custom
+include baseconfig
+include apache
+include php
+include mysql
+include phpmyadmin
+include nodejs
+include composer

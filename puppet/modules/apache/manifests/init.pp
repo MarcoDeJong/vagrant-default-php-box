@@ -1,14 +1,32 @@
-# Installs packages for Apache2, enables modules, and sets config files.
 class apache {
-  package { [ 'apache2', 'apache2-mpm-prefork' ]:
-    ensure => present;
+
+  package { "apache2":
+    ensure => present,
   }
 
-  service { 'apache2':
-    ensure  => running,
-    require => Package['apache2'];
+  service { "apache2":
+    ensure => running,
+    enable => true,
+    require => Package["apache2"],
   }
 
-  apache::conf { [ 'apache2.conf', 'envvars', 'ports.conf' ]: }
-  apache::module { [ 'expires.load', 'proxy.conf', 'proxy.load', 'proxy_http.load', 'rewrite.load' ]: }
+  file { "/etc/apache2/sites-available/000-default.conf":
+      ensure  => present,
+      source  => "puppet:///modules/apache/vhost",
+      require => Package['apache2'],
+      notify => Service['apache2']
+  }
+
+  define apache::loadmodule () {
+    exec { "a2enmod $name" :
+      require => Package[apache2],
+      unless => "/bin/readlink -e /etc/apache2/mods-enabled/${name}.load",
+      notify => Service['apache2']
+    }
+  }
+
+  apache::loadmodule{"rewrite":}
+  apache::loadmodule{"proxy":}
+  apache::loadmodule{"proxy_fcgi":}
+
 }

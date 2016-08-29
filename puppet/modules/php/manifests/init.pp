@@ -1,46 +1,57 @@
-# Installs PHP5 and necessary modules. Sets config files.
 class php {
-  package { ['php5',
-             'php5-cli',
-             'libapache2-mod-php5',
-             'php5-curl',
-             'php5-dev',
-             'php5-gd',
-             'php5-imagick',
-             'php5-intl',
-             'php5-json',
-             'php5-mcrypt',
-             'php5-memcached',
-             'php5-mysql',
-             'php-pear',
-             'php5-pspell',
-             'php5-sqlite',
-             'php5-tidy',
-             'php5-xdebug',
-             'php5-xmlrpc',
-             'php5-xsl']:
-    ensure  => present,
-    require => [ Exec['apt-get update'], Package['apache2', 'mysql-server', 'memcached'] ];
+
+  exec { 'restarting... php7.1-fpm':
+    command => 'sudo service php7.1-fpm restart',
+    require => [
+      File['php-ini'],
+    ]
   }
 
-  file {
-    '/etc/php5/apache2':
-      ensure  => directory,
-      require => Package['php5'],
-      before  => File ['/etc/php5/apache2/php.ini'];
+  file { 'php-ini':
+    path 		=> '/etc/php/7.1/fpm/php.ini',
+    ensure 	=> present,
+    source 	=> 'puppet:///modules/php/php.ini',
+    require => Service['php7.1-fpm'],
+  }
 
-    '/etc/php5/apache2/php.ini':
-      source  => 'puppet:///modules/php/apache2-php.ini',
-      require => Package['php5'],
-      notify  => Service['apache2'];
+  service { 'php7.1-fpm':
+    ensure => running,
+    require => [
+      Package['php7.1'],
+      Package['php7.1-fpm'],
+    ]
+  }
 
-    '/etc/php5/cli':
-      ensure  => directory,
-      require => Package['php5'],
-      before  => File ['/etc/php5/cli/php.ini'];
+  package { [
+    'php7.1',
+    'php7.1-fpm',
+    'php7.1-mysql',
+    'php7.1-dev',
+  ]:
+    ensure => present,
+    require => Exec['apt-get update && purge php 5'],
+  }
 
-    '/etc/php5/cli/php.ini':
-      source  => 'puppet:///modules/php/cli-php.ini',
-      require => Package['php5-cli'];
+  exec { 'apt-get update && purge php 5':
+    command => 'sudo apt-get update && sudo apt-get purge php5-fpm -y && sudo apt-get --purge autoremove -y',
+    path    => ['/bin', '/usr/bin'],
+    require => Exec['apt-add ondrej/php'],
+  }
+
+  exec { 'apt-add ondrej/php':
+    command => 'sudo apt-add-repository ppa:ondrej/php -y',
+    path    => ['/bin', '/usr/bin'],
+    require => Exec['php pre-install tasks'],
+  }
+
+  # deal with characters in repository name
+  exec { 'php pre-install tasks':
+    command => 'sudo apt-get install -y language-pack-en-base && sudo locale-gen && export LC_ALL=en_US.UTF-8 && sudo apt-get install -y software-properties-common',
+    path    => ['/bin', '/usr/bin'],
+  }
+
+  package { "libapache2-mod-php7.1":
+    ensure => present,
+    require => Service['php7.1-fpm'],
   }
 }

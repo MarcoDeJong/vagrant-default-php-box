@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /vagrant/webroot
+
+        <Directory /vagrant/webroot>
+          Require all granted
+        </Directory>
+
+        LogLevel info warn
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>

@@ -1,10 +1,10 @@
 PHP Virtual development box
 ===========================
-*This virtualbox can run Symfony2, Joomla, Wordpress and Drupal for example.*
+*This virtualbox can run Symfony2, Laravel, Wordpress and Drupal for example.*
 
 Prologue
 --------
-I really got fed up with tools like MAMP and WAMP. They never installed -exactly- the same way on my Windows and Mac development machines. As alternative I could go into the commandline and use tools like Homebrew or MacPorts to configure PHP, Apache and MySQL locally myself. However these solutions were not optimal as well, because my harddrives ran over with programs I seldomly used. Above all, as soon as I changed machines (or reinstalled OS), I had to all start over. Grumble.
+I got fed up with tools like MAMP/WAMP. They never installed -exactly- the same way on my Windows and Mac development machines. As alternative I could go into the commandline and use tools like Homebrew or MacPorts to configure PHP, Apache and MySQL locally myself. However these solutions were not optimal as well, because my harddrives ran over with programs I seldomly used. Above all, as soon as I changed machines (or reinstalled OS), I had to all start over. Grumble.
 
 What is this box?
 -----------------
@@ -13,19 +13,16 @@ For me this is a replacement for MAMP and WAMP that I can use as starting point 
 Current configuration
 ---------------------
 This box currently installs:
-- Ubuntu 12.04 LTS precise 64
-- Apache 2.2.22
-- PHP 5.3.10
-- MySQL 5.5.31
-- SQLite 3.7.9
-- PHPMyAdmin 
-- Sass and Compass
+- Ubuntu 14.04
+- Apache 2.4
+- PHP 7.1
+- MySQL 5.5
+- PHPMyAdmin
 
 Requirements
 ------------
->- Virtualbox https://www.virtualbox.org/
+>- Virtualbox 5 https://www.virtualbox.org/
 >- Vagrant http://www.vagrantup.com/
->- Git https://help.github.com/articles/set-up-git
 
 Installation
 ------------
@@ -45,6 +42,6 @@ Commands
 
 Sidenotes
 ---------
-Once using ```vagrant up``` or ```vagrant provision``` you might see output, telling ```stdin: is not a tty```. 
+Once using ```vagrant up``` or ```vagrant provision``` you might see output, telling ```stdin: is not a tty```.
 There is no need to worry about this notice. It is not an error. This is telling you that the current tty is not interactive.
 
