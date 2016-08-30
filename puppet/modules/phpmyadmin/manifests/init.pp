@@ -1,22 +1,30 @@
 class phpmyadmin{
 
+  require php
+
   package
   {
     "phpmyadmin":
       ensure => present,
-      require => Package["apache2"]
+      require => Exec['apt-add nijel/phpmyadmin']
   }
 
-  file
-  {
-    "/etc/apache2/sites-available/phpmyadmin.conf":
-      ensure => link,
-      target => "/etc/phpmyadmin/apache.conf",
-      require => Package['phpmyadmin']
+  exec { 'apt-add nijel/phpmyadmin':
+    command => 'sudo add-apt-repository ppa:nijel/phpmyadmin -y && apt-get update'
   }
 
-  exec { "config":
-    command => "a2ensite phpmyadmin",
-    require => Service['apache2']
+  exec { 'apt-remove nijel/phpmyadmin':
+    command => 'sudo add-apt-repository --remove ppa:nijel/phpmyadmin -y && apt-get update'
   }
+
+  # Enable access via /phpmyadmin
+  # This assumes apache is installed somewhere else in the Puppet manifests
+  file { '/etc/apache2/sites-enabled/phpmyadmin.conf':
+    ensure  => 'link',
+    target => '/etc/phpmyadmin/apache.conf',
+    require => Package['phpmyadmin'],
+    notify => [Service['apache2'],
+              Exec['apt-remove nijel/phpmyadmin']]
+  }
+
 }

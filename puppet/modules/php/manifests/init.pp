@@ -27,6 +27,8 @@ class php {
     'php7.1-fpm',
     'php7.1-mysql',
     'php7.1-dev',
+    'php7.1-mbstring',
+    'php7.1-mcrypt'
   ]:
     ensure => present,
     require => Exec['apt-get update && purge php 5'],
@@ -34,20 +36,17 @@ class php {
 
   exec { 'apt-get update && purge php 5':
     command => 'sudo apt-get update && sudo apt-get purge php5-fpm -y && sudo apt-get --purge autoremove -y',
-    path    => ['/bin', '/usr/bin'],
     require => Exec['apt-add ondrej/php'],
   }
 
   exec { 'apt-add ondrej/php':
     command => 'sudo apt-add-repository ppa:ondrej/php -y',
-    path    => ['/bin', '/usr/bin'],
     require => Exec['php pre-install tasks'],
   }
 
   # deal with characters in repository name
   exec { 'php pre-install tasks':
     command => 'sudo apt-get install -y language-pack-en-base && sudo locale-gen && export LC_ALL=en_US.UTF-8 && sudo apt-get install -y software-properties-common',
-    path    => ['/bin', '/usr/bin'],
   }
 
   package { "libapache2-mod-php7.1":
