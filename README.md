@@ -28,9 +28,9 @@ Installation
 ------------
 1. Make sure you meet the above requirements
 2. git clone (or fork first)
-3. ```vagrant up``` *the first time your box is being set-up. This can take up to 15 minutes)
+3. ```vagrant up``` *the first time your box is being set-up. This can take up to 5 minutes)
 4. Go to ```http://10.11.12.13/box``` to see if your virtualbox is running properly
-5. Insert your own content to /www/ (for example Git checkout)
+5. Insert your own content to /webroot (you could do a Git checkout of your project there)
 6. Visit ```http://10.11.12.13/```
 
 Commands
